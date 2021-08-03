@@ -2,11 +2,9 @@ package com.testannotation.patientservice;
 
 import com.testannotation.patientservice.model.Patient;
 import org.json.JSONException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -14,9 +12,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.assertj.core.api.BDDAssertions.then;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PatientServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PatientControllerIntegrationTest {
     @LocalServerPort
@@ -39,7 +38,7 @@ public class PatientControllerIntegrationTest {
                             "\"firstName\":\"John\","+
                             "\"lastName\":\"Smart\","+
                             "\"dateOfBirth\":\"02/02/1997\","+
-                            "\"dateOfRegistration\":\"04/12/2009\","+
+                            "\"registrationDate\":\"04/12/2009\","+
                             "\"address\":\"15 Foreshore Road, Philadelphia, PA, 19101\","+
                             "\"mrn\":\"2009120401\"}";
 
@@ -49,9 +48,10 @@ public class PatientControllerIntegrationTest {
 
     @Test
     public void testPatientCreation() {
-
+        //Given
         Patient patient = new Patient("Kevin", "Smart", "02/02/1997", "04/12/2009", "15 Foreshore Road, Philadelphia, PA, 19101");
 
+        //When
         HttpEntity<Patient> entity = new HttpEntity<Patient>(patient, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -60,13 +60,15 @@ public class PatientControllerIntegrationTest {
 
         String actual = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
 
-        Assert.assertTrue(actual.contains("patient-service/patient?MRN="));
+        //Then
+        then(actual)
+                .as("Verify location header")
+                .contains("patient-service/patient?MRN=");
 
     }
 
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
-
 
 }
