@@ -28,6 +28,6 @@ public class PatientController {
         Patient newPatient = patientService.addPatient(patient);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().queryParam("MRN", newPatient.getMRN())
                 .build().toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(newPatient);
     }
 }

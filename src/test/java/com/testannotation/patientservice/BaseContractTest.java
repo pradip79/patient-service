@@ -23,7 +23,6 @@ public class BaseContractTest {
 
     @BeforeEach
     public void setUp(){
-        System.out.println("Inside setUp");
         StandaloneMockMvcBuilder standaloneMockMvcBuilder
                 = MockMvcBuilders.standaloneSetup(patientController);
         RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
