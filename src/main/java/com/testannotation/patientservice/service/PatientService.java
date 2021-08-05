@@ -14,7 +14,7 @@ public class PatientService {
     private static List<Patient> patients = new ArrayList<>();
 
     static {
-        Patient patient1 = new Patient("John", "Smart", "2009120401", "02/02/1997", "04/12/2009", "15 Foreshore Road, Philadelphia, PA, 19101");
+        Patient patient1 = new Patient("Brian", "Smart", "2009120401", "02/02/1997", "04/12/2009", "15 Foreshore Road, Philadelphia, PA, 19101");
         Patient patient2 = new Patient("Simon", "North", "2001110703", "01/02/1994", "07/11/2001", "25 Market Street, Philadelphia, PA, 19102");
         patients.addAll(Arrays.asList(patient1, patient2));
     }

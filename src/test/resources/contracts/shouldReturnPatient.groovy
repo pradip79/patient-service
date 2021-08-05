@@ -6,7 +6,7 @@ Contract.make {
         method GET()
         url("/patient-service/patient"){
             queryParameters {
-                parameter("MRN", "2009120401")
+                parameter("MRN", value(consumer(containing('2009')), producer('2009120401')))
             }
         }
     }
@@ -16,7 +16,13 @@ Contract.make {
             contentType applicationJson()
         }
         body(
-                file("patient_john.json")
+                firstName: $(consumer('John'), producer(regex(onlyAlphaUnicode()))),
+                lastName: $(consumer('Smart'), producer(regex(onlyAlphaUnicode()))),
+                dateOfBirth: "02/02/1997",
+                registrationDate: "04/12/2009",
+                address: "15 Foreshore Road, Philadelphia, PA, 19101",
+                mrn: "2009120401"
         )
     }
 }
+
