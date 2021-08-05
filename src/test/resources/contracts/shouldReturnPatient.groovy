@@ -16,12 +16,7 @@ Contract.make {
             contentType applicationJson()
         }
         body(
-                firstName: "John",
-                lastName: "Smart",
-                dateOfBirth: "02/02/1997",
-                registrationDate: "04/12/2009",
-                address: "15 Foreshore Road, Philadelphia, PA, 19101",
-                mrn: "2009120401"
+                file("patient_john.json")
         )
     }
 }
